@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -17,8 +19,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePlaygroundTheme {
-                // A surface container using the 'background' color from the theme
+                LazyColumn(modifier = Modifier) {
+                    items(10){
+                        DataText(text = "$it Data")
+                    }
+                }
             }
         }
     }
+}
+
+@Composable
+fun DataText(text : String) {
+    Text(text = text)
 }
