@@ -14,28 +14,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.composeplayground.entity.TodoEntity
 
 @Composable
-fun TodoItem(number : Int, context : Context = LocalContext.current) {
+fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Title $number",
+            text = todo.todo,
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
                     Toast
-                        .makeText(context, "Title $number", Toast.LENGTH_SHORT)
+                        .makeText(context, todo.todo, Toast.LENGTH_SHORT)
                         .show()
                 },
             fontSize = 30.sp,
         )
-        Text(text = "subTitle $number", modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                Toast
-                    .makeText(context, "SubTitle $number", Toast.LENGTH_SHORT)
-                    .show()
-            }, fontSize = 15.sp)
+        if(todo.isChecked) {
+            Text(
+                "it is cleared"
+            )
+        }
         Spacer(
             Modifier
                 .fillMaxWidth()
@@ -46,5 +45,5 @@ fun TodoItem(number : Int, context : Context = LocalContext.current) {
 @Preview
 @Composable
 fun PreviewDataText() {
-    TodoItem(number = 0)
+    TodoItem(TodoEntity("청소하기"))
 }
