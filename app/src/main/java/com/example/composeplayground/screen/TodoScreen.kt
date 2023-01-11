@@ -7,15 +7,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.composeplayground.components.AddButton
 import com.example.composeplayground.components.ResetButton
 import com.example.composeplayground.components.TodoDialog
 import com.example.composeplayground.components.TodoItem
 import com.example.composeplayground.text.EMPTY_LIST
+import com.example.domain.model.Todo
 
 @Composable
 fun TodoScreen(todoViewModel: TodoViewModel = hiltViewModel()){
+    val todoList : State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
     if(todoViewModel.dialogOpen.value) {
         var todoText by remember { mutableStateOf("") }
         val todoTextChange : (String) -> Unit = { todoText = it}
@@ -27,17 +28,17 @@ fun TodoScreen(todoViewModel: TodoViewModel = hiltViewModel()){
         Row(){
             AddButton(todoViewModel::openDialog)
             Spacer(modifier = Modifier.width(10.dp))
-            if(todoViewModel.todoList.size != 0){
+            if(todoList.value.isNotEmpty()){
                 ResetButton(todoViewModel::resetTodoList)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        if(todoViewModel.todoList.size == 0){
+        if(todoList.value.isEmpty()){
             Text(text = EMPTY_LIST)
         }else{
             LazyColumn(){
-                items(todoViewModel.todoList.size){
-                    TodoItem(todo = todoViewModel.todoList[it],todoViewModel::toggleTodoList)
+                items(todoList.value.size){
+                    TodoItem(todo = todoList.value[it],todoViewModel::toggleTodoList)
                 }
             }
         }

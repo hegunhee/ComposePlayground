@@ -28,5 +28,9 @@ class DefaultTodoRepository @Inject constructor(private val todoDao: TodoDao) : 
         todoDao.deleteAllTodoList()
     }
 
+    override suspend fun toggleTodo(todo: Todo) {
+        todoDao.toggleTodo(TodoEntity(todo.title,todo.isChecked))
+    }
+
 
 }

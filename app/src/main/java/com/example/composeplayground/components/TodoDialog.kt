@@ -16,16 +16,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.composeplayground.entity.TodoEntity
+import com.example.domain.model.Todo
 
 @Composable
-fun TodoDialog(text : String,textChange : (String)-> Unit,addTodo : (TodoEntity) -> Unit,dismissDialog : () -> Unit){
+fun TodoDialog(text : String, textChange : (String)-> Unit, addTodo : (Todo) -> Unit, dismissDialog : () -> Unit){
     Dialog(onDismissRequest = {  }) {
         TodoDialogContent(text,textChange,addTodo,dismissDialog)
     }
 }
 
 @Composable
-fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (TodoEntity) -> Unit,dismissDialog : () -> Unit,context : Context = LocalContext.current) {
+fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (Todo) -> Unit,dismissDialog : () -> Unit,context : Context = LocalContext.current) {
     Column(Modifier.background(Color.White)) {
         Spacer(modifier = Modifier
             .height(12.dp)
@@ -54,7 +55,7 @@ fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (Todo
             if(text.isBlank()){
                 Toast.makeText(context, "글자가 비어있습니다.", Toast.LENGTH_SHORT).show()
             }else{
-                addTodo(TodoEntity(text))
+                addTodo(Todo(text))
                 dismissDialog()
             }
         }, modifier = Modifier
@@ -72,7 +73,7 @@ fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (Todo
 private fun TodoAddDialogTest(){
     var text by remember { mutableStateOf("") }
     val textChange : (String) -> Unit = { text = it }
-    val addTodo : (TodoEntity) -> Unit = {it}
+    val addTodo : (Todo) -> Unit = {it}
     var openDialog by remember { mutableStateOf(true) }
     val dismissDialog : () -> Unit = {openDialog = false}
     if(openDialog){

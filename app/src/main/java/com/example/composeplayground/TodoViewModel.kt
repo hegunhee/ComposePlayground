@@ -1,37 +1,53 @@
 package com.example.composeplayground
 
 
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.composeplayground.entity.TodoEntity
+import com.example.domain.model.Todo
+import com.example.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TodoViewModel @Inject constructor(): ViewModel() {
+class TodoViewModel @Inject constructor(
+    private val insertTodoUseCase: InsertTodoUseCase,
+    private val getAllTodoListByFlowUseCase: GetAllTodoListByFlowUseCase,
+    private val getAllTodoListUseCase: GetAllTodoListUseCase,
+    private val deleteAllTodoListUseCase: DeleteAllTodoListUseCase,
+    private val toggleTodoUseCase: ToggleTodoUseCase
 
-    var todoList =  mutableStateListOf<TodoEntity>()
+): ViewModel() {
+
+    var todoList =  getAllTodoListByFlowUseCase()
     private set
 
-    
-    var a = flow<TodoEntity> {  }
     var dialogOpen = mutableStateOf<Boolean>(false)
     private set
 
-    fun addTodo(todo : TodoEntity){
-        todoList.add(todo)
+    fun addTodo(todo : Todo) {
+        viewModelScope.launch {
+            insertTodoUseCase(todo)
+        }
+
     }
 
     fun resetTodoList() {
-        todoList.clear()
+        viewModelScope.launch{
+            deleteAllTodoListUseCase()
+        }
+
     }
 
-    fun toggleTodoList(todo : TodoEntity){
-        val index = todoList.indexOf(todoList.find { it == todo })
-        todoList.removeAt(index)
-        todoList.add(index,TodoEntity(todo.todo,!todo.isChecked))
+    fun toggleTodoList(todo : Todo){
+        viewModelScope.launch {
+            toggleTodoUseCase(todo.copy(isChecked = !todo.isChecked))
+        }
     }
 
     fun dismissDialog() {
