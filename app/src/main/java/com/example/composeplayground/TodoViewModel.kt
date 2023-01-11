@@ -1,15 +1,20 @@
 package com.example.composeplayground
 
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.composeplayground.entity.TodoEntity
+import kotlinx.coroutines.flow.flow
+import java.util.concurrent.Flow
 
 class TodoViewModel : ViewModel() {
 
     var todoList =  mutableStateListOf<TodoEntity>()
     private set
 
+    
+    var a = flow<TodoEntity> {  }
     var dialogOpen = mutableStateOf<Boolean>(false)
     private set
 
