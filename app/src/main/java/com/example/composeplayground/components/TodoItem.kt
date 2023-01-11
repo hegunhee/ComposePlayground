@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.composeplayground.entity.TodoEntity
 
 @Composable
-fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current) {
+fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current,) {
     Surface(shape = RoundedCornerShape(percent = 50),modifier = Modifier
         .fillMaxWidth()
         .padding(bottom = 10.dp)){
@@ -44,7 +44,7 @@ fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current) {
 
 @Preview
 @Composable
-fun PreviewDataTextColumn() {
+private fun PreviewDataTextColumn() {
     Column() {
         TodoItem(TodoEntity("청소하기", isChecked = true))
         TodoItem(TodoEntity("밥먹기", isChecked = false))
@@ -53,7 +53,7 @@ fun PreviewDataTextColumn() {
 
 @Preview
 @Composable
-fun PreviewDataTextLazyColumn() {
+private fun PreviewDataTextLazyColumn() {
     LazyColumn(){
         items(100){
             val isChecked = it %3 == 0

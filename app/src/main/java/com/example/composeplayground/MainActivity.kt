@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.composeplayground.components.TodoItem
+import com.example.composeplayground.entity.TodoEntity
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +36,11 @@ class MainActivity : ComponentActivity() {
                                 Text(text = "reset Item")
                             }
                         }
-
+                        LazyColumn(){
+                            items(itemList){
+                                TodoItem(todo = TodoEntity(todo = "할일 ${it+1}", isChecked = it%3 == 0),context = context)
+                            }
+                        }
 //                        LazyColumn(){
 //                            items(itemList){
 //                                TodoItem(number = it+1, context = context)
