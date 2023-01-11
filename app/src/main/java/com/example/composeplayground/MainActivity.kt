@@ -36,11 +36,11 @@ class MainActivity : ComponentActivity() {
                             }
                         }
 
-                        LazyColumn(){
-                            items(itemList){
-                                TodoItem(number = it+1, context = context)
-                            }
-                        }
+//                        LazyColumn(){
+//                            items(itemList){
+//                                TodoItem(number = it+1, context = context)
+//                            }
+//                        }
                     }
                 }
             }
