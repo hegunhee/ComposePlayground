@@ -17,6 +17,7 @@ import com.example.composeplayground.components.ResetButton
 import com.example.composeplayground.components.TodoDialog
 import com.example.composeplayground.components.TodoItem
 import com.example.composeplayground.entity.TodoEntity
+import com.example.composeplayground.text.EMPTY_LIST
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     if(todoList.size == 0){
-                        Text("TodoList가 비어있습니다.")
+                        Text(text = EMPTY_LIST)
                     }else{
                         LazyColumn(){
                             items(todoList.size){
