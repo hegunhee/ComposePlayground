@@ -71,15 +71,11 @@ fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (Todo
 @Composable
 private fun TodoAddDialogTest(){
     var text by remember { mutableStateOf("") }
-    val textChange : (String) -> Unit = {
-        text = it
-    }
+    val textChange : (String) -> Unit = { text = it }
     val addTodo : (TodoEntity) -> Unit = {it}
     var openDialog by remember { mutableStateOf(true) }
     val dismissDialog : () -> Unit = {openDialog = false}
     if(openDialog){
         TodoDialog(text,textChange,addTodo,dismissDialog)
-    }else{
-
     }
 }

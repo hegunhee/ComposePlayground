@@ -27,12 +27,7 @@ fun TodoItem(todo : TodoEntity,toggleTodo : (TodoEntity) -> Unit, context : Cont
         Row(horizontalArrangement = Arrangement.SpaceAround) {
             Text(
                 text = todo.todo,
-                modifier = Modifier
-                    .clickable {
-                        Toast
-                            .makeText(context, todo.todo, Toast.LENGTH_SHORT)
-                            .show()
-                    },
+                modifier = Modifier.clickable { Toast.makeText(context, todo.todo, Toast.LENGTH_SHORT).show() },
                 fontSize = 30.sp,
             )
             Checkbox(checked = todo.isChecked, onCheckedChange = {
