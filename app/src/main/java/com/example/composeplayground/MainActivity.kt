@@ -1,6 +1,7 @@
 package com.example.composeplayground
 
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.composeplayground.components.AddButton
+import com.example.composeplayground.components.ResetButton
+import com.example.composeplayground.components.TodoDialog
 import com.example.composeplayground.components.TodoItem
 import com.example.composeplayground.entity.TodoEntity
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
@@ -20,41 +24,43 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePlaygroundTheme {
-                var itemList by remember {mutableStateOf(0) }
-                val increaseItem : () -> Unit = { itemList++ }
-                val resetItem : () -> Unit = { itemList = 0 }
-                val context = LocalContext.current
-                if(itemList == 0){
-                    ZeroItemList(increaseItem)
-                }else{
-                    Column() {
-                        Row(Modifier.height(100.dp)){
-                            Button(onClick = increaseItem,modifier = Modifier.padding(end = 10.dp)) {
-                                Text(text = "it is $itemList")
-                            }
-                            Button(onClick = resetItem) {
-                                Text(text = "reset Item")
-                            }
+                val todoList = remember { mutableStateListOf<TodoEntity>() }
+                var dialogOpen by remember { mutableStateOf(false) }
+                val dismissDialog : () -> Unit = {dialogOpen = false}
+                val openDialog : () -> Unit = {dialogOpen = true}
+                val addTodo : (TodoEntity) -> Unit = { todo -> todoList.add(todo) }
+                val resetTodo : () -> Unit = { todoList.clear() }
+                val toggleTodo : (TodoEntity) -> Unit = { todo ->
+                    val index = todoList.indexOf(todoList.find { it == todo })
+                    todoList.removeAt(index)
+                    todoList.add(index,TodoEntity(todo.todo,!todo.isChecked))
+                }
+
+                if(dialogOpen) {
+                    var todoText by remember { mutableStateOf("") }
+                    val todoTextChange : (String) -> Unit = { todoText = it}
+                    TodoDialog(text = todoText, textChange = todoTextChange,addTodo = addTodo, dismissDialog = dismissDialog)
+                }
+                Column() {
+                    Row(){
+                        AddButton(openDialog)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        if(todoList.size != 0){
+                            ResetButton(resetTodo)
                         }
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
+                    if(todoList.size == 0){
+                        Text("TodoList가 비어있습니다.")
+                    }else{
                         LazyColumn(){
-                            items(itemList){
-                                TodoItem(todo = TodoEntity(todo = "할일 ${it+1}", isChecked = it%3 == 0),context = context)
+                            items(todoList.size){
+                                TodoItem(todo = todoList[it],toggleTodo)
                             }
                         }
-//                        LazyColumn(){
-//                            items(itemList){
-//                                TodoItem(number = it+1, context = context)
-//                            }
-//                        }
                     }
                 }
             }
         }
-    }
-}
-@Composable
-fun ZeroItemList(onClick : () -> Unit){
-    Button(onClick = onClick){
-        Text(text = "zero Item")
     }
 }

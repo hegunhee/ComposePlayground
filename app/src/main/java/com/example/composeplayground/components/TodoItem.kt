@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.composeplayground.entity.TodoEntity
 
 @Composable
-fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current,) {
+fun TodoItem(todo : TodoEntity,toggleTodo : (TodoEntity) -> Unit, context : Context = LocalContext.current) {
     Surface(shape = RoundedCornerShape(percent = 50),modifier = Modifier
         .fillMaxWidth()
         .padding(bottom = 10.dp)){
@@ -35,8 +35,8 @@ fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current,) {
                     },
                 fontSize = 30.sp,
             )
-            Checkbox(checked = todo.isChecked, onCheckedChange = { checked ->
-
+            Checkbox(checked = todo.isChecked, onCheckedChange = {
+                toggleTodo(todo)
             })
         }
     }
@@ -46,8 +46,8 @@ fun TodoItem(todo : TodoEntity, context : Context = LocalContext.current,) {
 @Composable
 private fun PreviewDataTextColumn() {
     Column() {
-        TodoItem(TodoEntity("청소하기", isChecked = true))
-        TodoItem(TodoEntity("밥먹기", isChecked = false))
+        TodoItem(TodoEntity("청소하기", isChecked = true),{})
+        TodoItem(TodoEntity("밥먹기", isChecked = false),{})
     }
 }
 
@@ -57,7 +57,7 @@ private fun PreviewDataTextLazyColumn() {
     LazyColumn(){
         items(100){
             val isChecked = it %3 == 0
-            TodoItem(TodoEntity("할일 $it", isChecked = isChecked))
+            TodoItem(TodoEntity("할일 $it", isChecked = isChecked),{})
         }
     }
 }

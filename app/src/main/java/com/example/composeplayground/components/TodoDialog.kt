@@ -15,16 +15,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.composeplayground.entity.TodoEntity
 
 @Composable
-fun TodoDialog(text : String,textChange : (String)-> Unit,dismissDialog : () -> Unit){
+fun TodoDialog(text : String,textChange : (String)-> Unit,addTodo : (TodoEntity) -> Unit,dismissDialog : () -> Unit){
     Dialog(onDismissRequest = {  }) {
-        TodoDialogContent(text,textChange,dismissDialog)
+        TodoDialogContent(text,textChange,addTodo,dismissDialog)
     }
 }
 
 @Composable
-fun TodoDialogContent(text : String,textChange : (String)-> Unit,dismissDialog : () -> Unit,context : Context = LocalContext.current) {
+fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (TodoEntity) -> Unit,dismissDialog : () -> Unit,context : Context = LocalContext.current) {
     Column(Modifier.background(Color.White)) {
         Spacer(modifier = Modifier
             .height(12.dp)
@@ -45,13 +46,18 @@ fun TodoDialogContent(text : String,textChange : (String)-> Unit,dismissDialog :
             .fillMaxWidth())
         TextField(value = text, onValueChange = textChange, singleLine = true, modifier = Modifier
             .fillMaxWidth()
-            .background(
-                Color.White
-            ))
+        )
         Spacer(modifier = Modifier
             .height(12.dp)
             .fillMaxWidth())
-        Button(onClick = dismissDialog, modifier = Modifier
+        Button(onClick = {
+            if(text.isBlank()){
+                Toast.makeText(context, "글자가 비어있습니다.", Toast.LENGTH_SHORT).show()
+            }else{
+                addTodo(TodoEntity(text))
+                dismissDialog()
+            }
+        }, modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp),shape = RoundedCornerShape(24.dp)) {
             Text("추가", fontSize = 16.sp)
@@ -68,10 +74,11 @@ private fun TodoAddDialogTest(){
     val textChange : (String) -> Unit = {
         text = it
     }
+    val addTodo : (TodoEntity) -> Unit = {it}
     var openDialog by remember { mutableStateOf(true) }
     val dismissDialog : () -> Unit = {openDialog = false}
     if(openDialog){
-        TodoDialog(text,textChange,dismissDialog)
+        TodoDialog(text,textChange,addTodo,dismissDialog)
     }else{
 
     }
