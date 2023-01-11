@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.composeplayground.components.AddButton
 import com.example.composeplayground.components.ResetButton
@@ -14,7 +15,7 @@ import com.example.composeplayground.components.TodoItem
 import com.example.composeplayground.text.EMPTY_LIST
 
 @Composable
-fun TodoScreen(todoViewModel : TodoViewModel = viewModel()){
+fun TodoScreen(todoViewModel: TodoViewModel = hiltViewModel()){
     if(todoViewModel.dialogOpen.value) {
         var todoText by remember { mutableStateOf("") }
         val todoTextChange : (String) -> Unit = { todoText = it}

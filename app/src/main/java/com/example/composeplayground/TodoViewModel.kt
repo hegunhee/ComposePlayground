@@ -1,14 +1,16 @@
 package com.example.composeplayground
 
-import androidx.compose.runtime.collectAsState
+
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.composeplayground.entity.TodoEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flow
-import java.util.concurrent.Flow
+import javax.inject.Inject
 
-class TodoViewModel : ViewModel() {
+@HiltViewModel
+class TodoViewModel @Inject constructor(): ViewModel() {
 
     var todoList =  mutableStateListOf<TodoEntity>()
     private set
