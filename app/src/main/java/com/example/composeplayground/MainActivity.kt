@@ -1,5 +1,6 @@
 package com.example.composeplayground
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,13 +11,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composeplayground.navigation.Screen
+import com.example.composeplayground.screen.DetailErrorScreen
+import com.example.composeplayground.screen.DetailScreen
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
+import com.example.domain.model.Todo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -53,18 +58,26 @@ private fun NavGraphBuilder.todoScreen(navController: NavController){
     }
 }
 
-private fun NavGraphBuilder.detailScreen(navController: NavController){ 
+@SuppressLint("StateFlowValueCalledInComposition")
+private fun NavGraphBuilder.detailScreen(navController: NavController){
     composable(route = Screen.DetailTodo.route){
-        Column() {
-            it.arguments?.getString("title")?.let {
-                Text(text = it)
-            } ?: kotlin.run {
-
+        val viewModel : DetailViewModel = hiltViewModel()
+        val title = it.arguments?.getString("title")
+        if(title != null){
+            viewModel.fetchTodo(title)
+            val todo = viewModel.todo.value
+            if(todo != null){
+                DetailScreen(back = viewModel::onClickBackButton, delete = viewModel::deleteTodo, todo = todo)
+            }else{
+                Text(text = "로딩중")
             }
-            Button(onClick = { navController.popBackStack() }) {
-
+        }else{
+            DetailErrorScreen(back = viewModel::onClickBackButton)
+        }
+        LaunchedEffect(key1 = Unit){
+            viewModel.backScreen.collect{
+                navController.popBackStack()
             }
         }
-
     }
 }

@@ -11,6 +11,10 @@ interface TodoRepository {
 
     fun getAllTodoListByFlow() : Flow<List<Todo>>
 
+    suspend fun getTodoByTitle(title : String) : Todo
+
+    suspend fun deleteTodo(todo: Todo)
+
     suspend fun deleteAllTodoList()
 
     suspend fun toggleTodo(todo : Todo)
