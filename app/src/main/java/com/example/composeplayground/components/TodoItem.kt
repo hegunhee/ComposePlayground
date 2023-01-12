@@ -16,14 +16,13 @@ import androidx.compose.ui.unit.sp
 import com.example.domain.model.Todo
 
 @Composable
-fun TodoItem(todo : Todo, toggleTodo : (Todo) -> Unit, context : Context = LocalContext.current) {
+fun TodoItem(todo : Todo, toggleTodo : (Todo) -> Unit, context : Context = LocalContext.current,toDetail : (String) -> Unit = {}) {
     Surface(shape = RoundedCornerShape(percent = 50),modifier = Modifier
         .fillMaxWidth()
         .padding(bottom = 10.dp)){
-        Row(horizontalArrangement = Arrangement.SpaceAround) {
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.clickable { toDetail(todo.title) }) {
             Text(
                 text = todo.title,
-                modifier = Modifier.clickable { Toast.makeText(context, todo.title, Toast.LENGTH_SHORT).show() },
                 fontSize = 30.sp,
             )
             Checkbox(checked = todo.isChecked, onCheckedChange = {

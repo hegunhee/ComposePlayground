@@ -1,6 +1,7 @@
 package com.example.composeplayground
 
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +11,7 @@ import com.example.composeplayground.entity.TodoEntity
 import com.example.domain.model.Todo
 import com.example.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,6 +30,9 @@ class TodoViewModel @Inject constructor(
 
     var dialogOpen = mutableStateOf<Boolean>(false)
     private set
+
+    private val _detailTitle : MutableSharedFlow<String> = MutableSharedFlow()
+    val detailTitle : SharedFlow<String> = _detailTitle.asSharedFlow()
 
     fun addTodo(todo : Todo) {
         viewModelScope.launch {
@@ -58,5 +62,11 @@ class TodoViewModel @Inject constructor(
         dialogOpen.value = true
     }
 
+    fun toDetail(title : String) {
+        viewModelScope.launch {
+            _detailTitle.emit(title)
+        }
+
+    }
 
 }

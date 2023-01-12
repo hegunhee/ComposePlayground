@@ -38,7 +38,7 @@ fun TodoScreen(todoViewModel: TodoViewModel){
         }else{
             LazyColumn(){
                 items(todoList.value.size){
-                    TodoItem(todo = todoList.value[it],todoViewModel::toggleTodoList)
+                    TodoItem(todo = todoList.value[it],todoViewModel::toggleTodoList, toDetail = todoViewModel::toDetail)
                 }
             }
         }

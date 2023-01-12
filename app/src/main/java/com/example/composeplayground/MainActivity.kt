@@ -6,7 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -15,6 +18,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -35,10 +42,12 @@ class MainActivity : ComponentActivity() {
 private fun NavGraphBuilder.todoScreen(navController: NavController){
     composable(route = Screen.Todo.route){
         val viewModel : TodoViewModel = hiltViewModel()
-        Column() {
-            TodoScreen(todoViewModel = viewModel)
-            Button(onClick = { navController.navigate(Screen.DetailTodo.createRoute("제목")) }) {
-
+        TodoScreen(todoViewModel = viewModel)
+        LaunchedEffect(key1 = Unit){
+            launch {
+                viewModel.detailTitle.collect{ title ->
+                    navController.navigate(Screen.DetailTodo.createRoute(title))
+                }
             }
         }
     }
@@ -49,6 +58,8 @@ private fun NavGraphBuilder.detailScreen(navController: NavController){
         Column() {
             it.arguments?.getString("title")?.let {
                 Text(text = it)
+            } ?: kotlin.run {
+
             }
             Button(onClick = { navController.popBackStack() }) {
 
