@@ -18,3 +18,17 @@ fun ResetButton(resetTodo : () -> Unit){
         Text(text = "resetTodo", fontSize = 16.sp)
     }
 }
+
+@Composable
+fun BackButton(back : () -> Unit){
+    Button(onClick = back) {
+        Text(text = "뒤로 가기", fontSize = 16.sp)
+    }
+}
+
+@Composable
+fun DeleteButton(delete : () -> Unit){
+    Button(onClick = delete) {
+        Text(text = "삭제",fontSize = 16.sp)
+    }
+}
