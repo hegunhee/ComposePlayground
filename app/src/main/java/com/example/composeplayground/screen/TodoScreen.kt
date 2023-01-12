@@ -15,7 +15,7 @@ import com.example.composeplayground.text.EMPTY_LIST
 import com.example.domain.model.Todo
 
 @Composable
-fun TodoScreen(todoViewModel: TodoViewModel = hiltViewModel()){
+fun TodoScreen(todoViewModel: TodoViewModel){
     val todoList : State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
     if(todoViewModel.dialogOpen.value) {
         var todoText by remember { mutableStateOf("") }
