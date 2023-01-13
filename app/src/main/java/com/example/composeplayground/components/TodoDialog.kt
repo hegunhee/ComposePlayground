@@ -15,12 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.example.composeplayground.entity.TodoEntity
 import com.example.domain.model.Todo
 
 @Composable
 fun TodoDialog(text : String, textChange : (String)-> Unit, addTodo : (Todo) -> Unit, dismissDialog : () -> Unit){
-    Dialog(onDismissRequest = {  }) {
+    Dialog(onDismissRequest = dismissDialog ) {
         TodoDialogContent(text,textChange,addTodo,dismissDialog)
     }
 }
