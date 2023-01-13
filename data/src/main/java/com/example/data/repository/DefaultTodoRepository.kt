@@ -24,6 +24,14 @@ class DefaultTodoRepository @Inject constructor(private val todoDao: TodoDao) : 
         return todoDao.getAllTodoListByFlow().map { it.toTodoList() }
     }
 
+    override suspend fun getTodoByTitle(title: String): Todo {
+        return todoDao.getTodoByTitle(title).toTodo()
+    }
+
+    override suspend fun deleteTodo(todo: Todo) {
+        todoDao.deleteTodo(TodoEntity(todo.title,todo.isChecked))
+    }
+
     override suspend fun deleteAllTodoList() {
         todoDao.deleteAllTodoList()
     }

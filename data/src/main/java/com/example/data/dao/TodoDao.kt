@@ -1,10 +1,6 @@
 package com.example.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.data.entity.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -19,6 +15,12 @@ interface TodoDao {
 
     @Query("SELECT * FROM TodoEntity")
     fun getAllTodoListByFlow() : Flow<List<TodoEntity>>
+
+    @Query("SELECT * FROM TodoEntity WHERE title LIKE :title")
+    suspend fun getTodoByTitle(title : String) : TodoEntity
+
+    @Delete
+    suspend fun deleteTodo(todo: TodoEntity)
 
     @Query("DELETE FROM TodoEntity")
     suspend fun deleteAllTodoList()

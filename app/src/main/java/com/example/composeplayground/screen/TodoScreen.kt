@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.components.AddButton
 import com.example.composeplayground.components.ResetButton
 import com.example.composeplayground.components.TodoDialog
@@ -15,7 +15,7 @@ import com.example.composeplayground.text.EMPTY_LIST
 import com.example.domain.model.Todo
 
 @Composable
-fun TodoScreen(todoViewModel: TodoViewModel = hiltViewModel()){
+fun TodoScreen(todoViewModel: TodoViewModel){
     val todoList : State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
     if(todoViewModel.dialogOpen.value) {
         var todoText by remember { mutableStateOf("") }
@@ -38,7 +38,7 @@ fun TodoScreen(todoViewModel: TodoViewModel = hiltViewModel()){
         }else{
             LazyColumn(){
                 items(todoList.value.size){
-                    TodoItem(todo = todoList.value[it],todoViewModel::toggleTodoList)
+                    TodoItem(todo = todoList.value[it],todoViewModel)
                 }
             }
         }
