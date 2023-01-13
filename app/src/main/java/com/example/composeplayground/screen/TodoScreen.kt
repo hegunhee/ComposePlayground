@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.components.AddButton
 import com.example.composeplayground.components.ResetButton
 import com.example.composeplayground.components.TodoDialog
@@ -38,7 +38,7 @@ fun TodoScreen(todoViewModel: TodoViewModel){
         }else{
             LazyColumn(){
                 items(todoList.value.size){
-                    TodoItem(todo = todoList.value[it],todoViewModel::toggleTodoList, toDetail = todoViewModel::toDetail)
+                    TodoItem(todo = todoList.value[it],todoViewModel)
                 }
             }
         }
