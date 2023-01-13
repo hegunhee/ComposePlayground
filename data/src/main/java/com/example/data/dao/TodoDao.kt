@@ -2,7 +2,6 @@ package com.example.data.dao
 
 import androidx.room.*
 import com.example.data.entity.TodoEntity
-import com.example.domain.model.Todo
 import kotlinx.coroutines.flow.Flow
 
 @Dao

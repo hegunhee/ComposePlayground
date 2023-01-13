@@ -1,10 +1,12 @@
 package com.example.composeplayground.components
 
+import android.widget.Toast
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.domain.model.Todo
 
 @Composable
 fun AddButton(openDialog : () -> Unit) {
@@ -14,8 +16,8 @@ fun AddButton(openDialog : () -> Unit) {
 }
 
 @Composable
-fun ResetButton(resetTodo : () -> Unit){
-    Button(onClick = resetTodo) {
+fun ResetButton(reset : () -> Unit){
+    Button(onClick = reset) {
         Text(text = "resetTodo", fontSize = 16.sp)
     }
 }
@@ -32,4 +34,12 @@ fun DeleteButton(delete : () -> Unit){
     Button(onClick = delete) {
         Text(text = "삭제",fontSize = 16.sp)
     }
+}
+
+@Preview
+@Composable
+fun ButtonPreview(){
+    val context = LocalContext.current
+    val onClick = { Toast.makeText(context, "onClick", Toast.LENGTH_SHORT).show()}
+    AddButton(onClick)
 }
