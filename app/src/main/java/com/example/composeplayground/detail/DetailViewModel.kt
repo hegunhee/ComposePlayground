@@ -1,5 +1,8 @@
-package com.example.composeplayground
+package com.example.composeplayground.detail
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Todo
@@ -16,6 +19,10 @@ class DetailViewModel @Inject constructor(
     private val deleteTodoUseCase: DeleteTodoUseCase
 ) : ViewModel() {
 
+    private val _uiState : MutableState<DetailUiState> = mutableStateOf<DetailUiState>(DetailUiState.Loading)
+    val uiState : State<DetailUiState>
+    get() = _uiState
+
     private val _backScreen : MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val backScreen : SharedFlow<Unit> = _backScreen.asSharedFlow()
 
@@ -27,6 +34,7 @@ class DetailViewModel @Inject constructor(
     fun fetchTodo(title: String) {
         viewModelScope.launch {
             runCatching {
+                _uiState.value = DetailUiState.Success(getTodoByTitleUseCase(title))
                 _todo.emit(getTodoByTitleUseCase(title))
             }
         }
