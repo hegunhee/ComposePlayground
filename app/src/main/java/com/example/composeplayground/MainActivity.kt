@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -18,6 +19,7 @@ import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.screen.DetailErrorScreen
 import com.example.composeplayground.screen.DetailScreen
+import com.example.composeplayground.screen.TodoScreen
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -41,6 +43,7 @@ class MainActivity : ComponentActivity() {
 private fun NavGraphBuilder.todoScreen(navController: NavController){
     composable(route = Screen.Todo.route){
         val viewModel : TodoViewModel = hiltViewModel()
+        val vm : TodoViewModel = viewModel()
         TodoScreen(todoViewModel = viewModel)
         LaunchedEffect(viewModel.detailTitle){
             launch {
