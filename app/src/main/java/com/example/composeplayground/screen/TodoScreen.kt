@@ -2,15 +2,12 @@ package com.example.composeplayground.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.composeplayground.R
 import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.components.ResetButton
 import com.example.composeplayground.components.TodoDialog
@@ -29,8 +26,12 @@ fun TodoScreen(todoViewModel: TodoViewModel) {
             addTodo = todoViewModel::addTodo, dismissDialog = todoViewModel::dismissDialog
         )
     }
-    Scaffold(topBar = {},
-        floatingActionButton = { FloatingActionButton(onClick = { todoViewModel.openDialog() }) {} },
+    Scaffold(
+        floatingActionButton = { FloatingActionButton(onClick = { todoViewModel.openDialog() }, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
+            Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
+
+        } },
+
     ) {
         Column() {
             Row() {
