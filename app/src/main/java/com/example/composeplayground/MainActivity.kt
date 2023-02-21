@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposePlaygroundTheme {
+            ComposePlaygroundTheme(darkTheme = false) {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = Screen.Todo.route){
                     todoScreen(navController)
