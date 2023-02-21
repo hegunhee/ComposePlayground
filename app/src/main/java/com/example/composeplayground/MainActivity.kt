@@ -43,7 +43,6 @@ class MainActivity : ComponentActivity() {
 private fun NavGraphBuilder.todoScreen(navController: NavController){
     composable(route = Screen.Todo.route){
         val viewModel : TodoViewModel = hiltViewModel()
-        val vm : TodoViewModel = viewModel()
         TodoScreen(todoViewModel = viewModel)
         LaunchedEffect(viewModel.detailTitle){
             launch {
