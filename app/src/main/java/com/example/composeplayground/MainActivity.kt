@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -63,7 +62,7 @@ private fun NavGraphBuilder.detailScreen(navController: NavController){
             viewModel.fetchTodo(title)
             val todo = viewModel.todo.collectAsState()
             if(todo.value != null){
-                DetailScreen(back = viewModel::onClickBackButton, delete = viewModel::deleteTodo, todo = todo.value!!)
+                DetailScreen(onClickBack = viewModel::onClickBackButton, onClickDelete = viewModel::deleteTodo, todo = todo.value!!)
             }else{
                 Text(text = "로딩중")
             }
