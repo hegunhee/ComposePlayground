@@ -17,17 +17,17 @@ import com.example.composeplayground.todo.TodoActionHandler
 import com.example.domain.model.Todo
 
 @Composable
-fun TodoItem(todo : Todo, eventHandler : TodoActionHandler = hiltViewModel()) {
+fun TodoItem(todo : Todo,onTodoDetailClick : (String) -> Unit,onTodoToggle : (Todo) -> Unit) {
     Surface(modifier = Modifier
         .fillMaxWidth()
         .padding(bottom = 10.dp).border(width = 1.dp,color = Color.Black,shape = RoundedCornerShape(percent = 50))){
-        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.clickable { eventHandler.toDetail(todo.title) }) {
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.clickable { onTodoDetailClick(todo.title) }) {
             Text(
                 text = todo.title,
                 fontSize = 30.sp,
             )
             Checkbox(checked = todo.isChecked, onCheckedChange = {
-                eventHandler.toggleTodo(todo)
+                onTodoToggle(todo)
             })
         }
     }
@@ -37,8 +37,8 @@ fun TodoItem(todo : Todo, eventHandler : TodoActionHandler = hiltViewModel()) {
 @Composable
 private fun PreviewDataTextColumn() {
     Column() {
-        TodoItem(Todo("청소하기", isChecked = true))
-        TodoItem(Todo("밥먹기", isChecked = false))
+        TodoItem(Todo("청소하기", isChecked = true),{},{})
+        TodoItem(Todo("밥먹기", isChecked = false),{},{})
     }
 }
 
@@ -48,7 +48,7 @@ private fun PreviewDataTextLazyColumn() {
     LazyColumn(){
         items(100){
             val isChecked = it %3 == 0
-            TodoItem(Todo("할일 $it", isChecked = isChecked))
+            TodoItem(Todo("할일 $it", isChecked = isChecked),{},{})
         }
     }
 }
