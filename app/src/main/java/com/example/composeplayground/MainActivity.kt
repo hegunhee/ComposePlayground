@@ -44,10 +44,8 @@ private fun NavGraphBuilder.todoScreen(navController: NavController){
         val viewModel : TodoViewModel = hiltViewModel()
         TodoScreen(todoViewModel = viewModel)
         LaunchedEffect(viewModel.detailTitle){
-            launch {
-                viewModel.detailTitle.collect{ title ->
-                    navController.navigate(Screen.DetailTodo.createRoute(title))
-                }
+            viewModel.detailTitle.value?.let { detailTitle ->
+                navController.navigate(Screen.DetailTodo.createRoute(detailTitle))
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.example.composeplayground.todo
 
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,8 +28,8 @@ class TodoViewModel @Inject constructor(
     var dialogOpen = mutableStateOf<Boolean>(false)
     private set
 
-    private val _detailTitle : MutableSharedFlow<String> = MutableSharedFlow()
-    val detailTitle : SharedFlow<String> = _detailTitle.asSharedFlow()
+    var detailTitle = mutableStateOf<String?>(null)
+    private set
 
     override fun addTodo(todo : Todo) {
         viewModelScope.launch {
@@ -58,9 +60,7 @@ class TodoViewModel @Inject constructor(
     }
 
     override fun toDetail(title : String) {
-        viewModelScope.launch {
-            _detailTitle.emit(title)
-        }
+        detailTitle.value = title
     }
 
 }
