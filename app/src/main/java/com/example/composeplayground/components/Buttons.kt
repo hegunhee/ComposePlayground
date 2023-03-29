@@ -16,13 +16,6 @@ fun AddButton(openDialog : () -> Unit) {
 }
 
 @Composable
-fun ResetButton(reset : () -> Unit){
-    Button(onClick = reset) {
-        Text(text = "resetTodo", fontSize = 16.sp)
-    }
-}
-
-@Composable
 fun BackButton(back : () -> Unit){
     Button(onClick = back) {
         Text(text = "뒤로 가기", fontSize = 16.sp)

@@ -7,10 +7,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composeplayground.R
 import com.example.composeplayground.todo.TodoViewModel
-import com.example.composeplayground.components.ResetButton
 import com.example.composeplayground.components.TodoDialog
 import com.example.composeplayground.components.TodoItem
 import com.example.composeplayground.text.EMPTY_LIST
@@ -50,7 +50,9 @@ fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (To
             Row() {
                 Spacer(modifier = Modifier.width(10.dp))
                 if (todoList.isNotEmpty()) {
-                    ResetButton(onResetTodoListClick)
+                    Button(onClick = onResetTodoListClick) {
+                        Text(text = "Reset", fontSize = 16.sp)
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
