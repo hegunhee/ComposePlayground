@@ -19,38 +19,51 @@ import com.example.domain.model.Todo
 @Composable
 fun TodoScreenRoute(todoViewModel: TodoViewModel = hiltViewModel()) {
     val todoList: State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
-    if (todoViewModel.dialogOpen.value) {
+    TodoScreen(
+        todoList = todoList.value,
+        isDialogOpen = todoViewModel.dialogOpen.value,
+        onAddTodoClick = todoViewModel::addTodo,
+        dismissDialog = todoViewModel::dismissDialog,
+        openDialog = todoViewModel::openDialog,
+        onResetTodoListClick = todoViewModel::resetTodoList,
+        onDetailClick = todoViewModel::toDetail,
+        onToggleTodoClick = todoViewModel::toggleTodo
+    )
+}
+
+@Composable
+fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (Todo) -> Unit, dismissDialog : () -> Unit,openDialog : () -> Unit,onResetTodoListClick : () -> Unit, onDetailClick : (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
+
+    if (isDialogOpen) {
         var todoText by remember { mutableStateOf("") }
         val todoTextChange: (String) -> Unit = { todoText = it }
-        TodoDialog(
-            text = todoText, textChange = todoTextChange,
-            addTodo = todoViewModel::addTodo, dismissDialog = todoViewModel::dismissDialog
-        )
+        TodoDialog(text = todoText, textChange = todoTextChange, addTodo = onAddTodoClick, dismissDialog = dismissDialog)
     }
     Scaffold(
-        floatingActionButton = { FloatingActionButton(onClick = { todoViewModel.openDialog() }, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
+        floatingActionButton = { FloatingActionButton(onClick = { openDialog() }, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
             Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
 
         } },
 
-    ) {
+        ) {
         Column() {
             Row() {
                 Spacer(modifier = Modifier.width(10.dp))
-                if (todoList.value.isNotEmpty()) {
-                    ResetButton(todoViewModel::resetTodoList)
+                if (todoList.isNotEmpty()) {
+                    ResetButton(onResetTodoListClick)
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
-            if (todoList.value.isEmpty()) {
+            if (todoList.isEmpty()) {
                 Text(text = EMPTY_LIST)
             } else {
                 LazyColumn() {
-                    items(todoList.value.size) {
-                        TodoItem(todo = todoList.value[it], onTodoDetailClick = todoViewModel::toDetail, onTodoToggle = todoViewModel::toggleTodo)
+                    items(todoList.size) {
+                        TodoItem(todo = todoList[it], onTodoDetailClick = onDetailClick, onTodoToggle = onToggleTodoClick)
                     }
                 }
             }
         }
     }
+
 }
