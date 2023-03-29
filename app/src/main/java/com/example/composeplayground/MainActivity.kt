@@ -42,11 +42,6 @@ class MainActivity : ComponentActivity() {
 private fun NavGraphBuilder.todoScreen(navController: NavController){
     composable(route = Screen.Todo.route){
         TodoScreenRoute()
-//        LaunchedEffect(viewModel.detailTitle){
-//            viewModel.detailTitle.value?.let { detailTitle ->
-//                navController.navigate(Screen.DetailTodo.createRoute(detailTitle))
-//            }
-//        }
     }
 }
 
