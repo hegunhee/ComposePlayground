@@ -18,7 +18,7 @@ import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.screen.DetailErrorScreen
 import com.example.composeplayground.screen.DetailScreen
-import com.example.composeplayground.screen.TodoScreen
+import com.example.composeplayground.screen.TodoScreenRoute
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -41,13 +41,12 @@ class MainActivity : ComponentActivity() {
 
 private fun NavGraphBuilder.todoScreen(navController: NavController){
     composable(route = Screen.Todo.route){
-        val viewModel : TodoViewModel = hiltViewModel()
-        TodoScreen(todoViewModel = viewModel)
-        LaunchedEffect(viewModel.detailTitle){
-            viewModel.detailTitle.value?.let { detailTitle ->
-                navController.navigate(Screen.DetailTodo.createRoute(detailTitle))
-            }
-        }
+        TodoScreenRoute()
+//        LaunchedEffect(viewModel.detailTitle){
+//            viewModel.detailTitle.value?.let { detailTitle ->
+//                navController.navigate(Screen.DetailTodo.createRoute(detailTitle))
+//            }
+//        }
     }
 }
 
