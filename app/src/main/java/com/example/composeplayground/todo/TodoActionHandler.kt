@@ -9,6 +9,4 @@ interface TodoActionHandler {
     fun resetTodoList()
 
     fun toggleTodo(todo : Todo)
-
-    fun toDetail(title : String)
 }

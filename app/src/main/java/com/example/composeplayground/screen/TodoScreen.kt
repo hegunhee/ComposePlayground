@@ -22,19 +22,17 @@ fun TodoScreenRoute(toNavigateDetail : (String) -> Unit ,todoViewModel: TodoView
     TodoScreen(
         todoList = todoList.value,
         isDialogOpen = todoViewModel.dialogOpen.value,
-        detailTitle = todoViewModel.detailTitle.value,
-        toNavigateDetail = toNavigateDetail,
         onAddTodoClick = todoViewModel::addTodo,
         dismissDialog = todoViewModel::dismissDialog,
         openDialog = todoViewModel::openDialog,
         onResetTodoListClick = todoViewModel::resetTodoList,
-        onDetailClick = todoViewModel::toDetail,
+        toNavigateDetail = toNavigateDetail,
         onToggleTodoClick = todoViewModel::toggleTodo
     )
 }
 
 @Composable
-fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,detailTitle : String?,toNavigateDetail: (String) -> Unit,onAddTodoClick : (Todo) -> Unit, dismissDialog : () -> Unit,openDialog : () -> Unit,onResetTodoListClick : () -> Unit, onDetailClick : (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
+fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (Todo) -> Unit, dismissDialog : () -> Unit,openDialog : () -> Unit,onResetTodoListClick : () -> Unit,toNavigateDetail: (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
 
     if (isDialogOpen) {
         var todoText by remember { mutableStateOf("") }
