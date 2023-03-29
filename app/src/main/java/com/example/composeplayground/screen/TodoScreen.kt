@@ -17,11 +17,13 @@ import com.example.composeplayground.text.EMPTY_LIST
 import com.example.domain.model.Todo
 
 @Composable
-fun TodoScreenRoute(todoViewModel: TodoViewModel = hiltViewModel()) {
+fun TodoScreenRoute(toNavigateDetail : (String) -> Unit ,todoViewModel: TodoViewModel = hiltViewModel()) {
     val todoList: State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
     TodoScreen(
         todoList = todoList.value,
         isDialogOpen = todoViewModel.dialogOpen.value,
+        detailTitle = todoViewModel.detailTitle.value,
+        toNavigateDetail = toNavigateDetail,
         onAddTodoClick = todoViewModel::addTodo,
         dismissDialog = todoViewModel::dismissDialog,
         openDialog = todoViewModel::openDialog,
@@ -32,7 +34,7 @@ fun TodoScreenRoute(todoViewModel: TodoViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (Todo) -> Unit, dismissDialog : () -> Unit,openDialog : () -> Unit,onResetTodoListClick : () -> Unit, onDetailClick : (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
+fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,detailTitle : String?,toNavigateDetail: (String) -> Unit,onAddTodoClick : (Todo) -> Unit, dismissDialog : () -> Unit,openDialog : () -> Unit,onResetTodoListClick : () -> Unit, onDetailClick : (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
 
     if (isDialogOpen) {
         var todoText by remember { mutableStateOf("") }
@@ -59,11 +61,10 @@ fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (To
             } else {
                 LazyColumn() {
                     items(todoList.size) {
-                        TodoItem(todo = todoList[it], onTodoDetailClick = onDetailClick, onTodoToggle = onToggleTodoClick)
+                        TodoItem(todo = todoList[it], onTodoDetailClick = toNavigateDetail, onTodoToggle = onToggleTodoClick)
                     }
                 }
             }
         }
     }
-
 }
