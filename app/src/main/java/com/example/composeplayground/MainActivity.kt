@@ -18,6 +18,7 @@ import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.screen.DetailErrorScreen
 import com.example.composeplayground.screen.DetailScreen
+import com.example.composeplayground.screen.DetailScreenRoute
 import com.example.composeplayground.screen.TodoScreenRoute
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,23 +50,12 @@ private fun NavGraphBuilder.todoScreen(navController: NavController){
 @SuppressLint("StateFlowValueCalledInComposition")
 private fun NavGraphBuilder.detailScreen(navController: NavController){
     composable(route = Screen.DetailTodo.route){
-        val viewModel : DetailViewModel = hiltViewModel()
+        val toPopBackStack : () -> Unit = {navController.popBackStack()}
         val title = it.arguments?.getString("title")
         if(title != null){
-            viewModel.fetchTodo(title)
-            val todo = viewModel.todo.value
-            if(todo != null){
-                DetailScreen(onClickBack = viewModel::onClickBackButton, onClickDelete = viewModel::deleteTodo, todo = todo)
-            }else{
-                Text(text = "로딩중")
-            }
+            DetailScreenRoute(todoTitle = title, onBackButtonClick = toPopBackStack)
         }else{
-            DetailErrorScreen(back = viewModel::onClickBackButton)
-        }
-        LaunchedEffect(viewModel.backScreen){
-            viewModel.backScreen.collect{
-                navController.popBackStack()
-            }
+            DetailErrorScreen(onBackButtonClick = toPopBackStack)
         }
     }
 }
