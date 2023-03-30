@@ -42,10 +42,7 @@ fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (To
     Scaffold(
         floatingActionButton = { FloatingActionButton(onClick = openDialog, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
             Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
-
-        } },
-
-        ) {
+        } },) {
         Column() {
             Row() {
                 Spacer(modifier = Modifier.width(10.dp))
