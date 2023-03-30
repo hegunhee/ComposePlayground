@@ -28,7 +28,10 @@ class DetailViewModel @Inject constructor(
 
     fun fetchTodo(title: String) {
         viewModelScope.launch {
-            _todo.value = getTodoByTitleUseCase(title)
+            runCatching {
+                _todo.value = getTodoByTitleUseCase(title)
+            }
+
         }
     }
 
@@ -37,7 +40,6 @@ class DetailViewModel @Inject constructor(
             todo.value?.let {
                 deleteTodoUseCase(it)
                 _backScreen.emit(Unit)
-                _todo.value = null
             }
         }
     }
