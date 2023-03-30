@@ -9,7 +9,6 @@ import com.example.domain.model.Todo
 import com.example.domain.usecase.DeleteTodoUseCase
 import com.example.domain.usecase.GetTodoByTitleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,9 +17,6 @@ class DetailViewModel @Inject constructor(
     private val getTodoByTitleUseCase: GetTodoByTitleUseCase,
     private val deleteTodoUseCase: DeleteTodoUseCase
 ) : ViewModel() {
-
-    private val _backScreen : MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
-    val backScreen : SharedFlow<Unit> = _backScreen.asSharedFlow()
 
     private val _todo : MutableState<Todo?> = mutableStateOf<Todo?>(null)
     val todo : State<Todo?>
@@ -39,15 +35,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             todo.value?.let {
                 deleteTodoUseCase(it)
-                _backScreen.emit(Unit)
             }
-        }
-    }
-
-
-    fun onClickBackButton() {
-        viewModelScope.launch {
-            _backScreen.emit(Unit)
         }
     }
 }
