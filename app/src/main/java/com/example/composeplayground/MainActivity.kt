@@ -1,28 +1,19 @@
 package com.example.composeplayground
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.composeplayground.detail.DetailViewModel
-import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.screen.DetailErrorScreen
-import com.example.composeplayground.screen.DetailScreen
 import com.example.composeplayground.screen.DetailScreenRoute
 import com.example.composeplayground.screen.TodoScreenRoute
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -46,8 +37,6 @@ private fun NavGraphBuilder.todoScreen(navController: NavController){
         TodoScreenRoute(toNavigateDetail = toNavigateDetail)
     }
 }
-
-@SuppressLint("StateFlowValueCalledInComposition")
 private fun NavGraphBuilder.detailScreen(navController: NavController){
     composable(route = Screen.DetailTodo.route){
         val toPopBackStack : () -> Unit = {navController.popBackStack()}
