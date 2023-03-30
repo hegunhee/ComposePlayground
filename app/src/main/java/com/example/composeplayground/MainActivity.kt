@@ -53,9 +53,9 @@ private fun NavGraphBuilder.detailScreen(navController: NavController){
         val title = it.arguments?.getString("title")
         if(title != null){
             viewModel.fetchTodo(title)
-            val todo = viewModel.todo.collectAsState()
-            if(todo.value != null){
-                DetailScreen(onClickBack = viewModel::onClickBackButton, onClickDelete = viewModel::deleteTodo, todo = todo.value!!)
+            val todo = viewModel.todo.value
+            if(todo != null){
+                DetailScreen(onClickBack = viewModel::onClickBackButton, onClickDelete = viewModel::deleteTodo, todo = todo)
             }else{
                 Text(text = "로딩중")
             }

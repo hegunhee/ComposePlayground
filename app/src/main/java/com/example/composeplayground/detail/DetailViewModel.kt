@@ -19,24 +19,16 @@ class DetailViewModel @Inject constructor(
     private val deleteTodoUseCase: DeleteTodoUseCase
 ) : ViewModel() {
 
-    private val _uiState : MutableState<DetailUiState> = mutableStateOf<DetailUiState>(DetailUiState.Loading)
-    val uiState : State<DetailUiState>
-    get() = _uiState
-
     private val _backScreen : MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
     val backScreen : SharedFlow<Unit> = _backScreen.asSharedFlow()
 
-    private val _todo : MutableStateFlow<Todo?> = MutableStateFlow(null)
-    val todo : StateFlow<Todo?> = _todo.asStateFlow()
-
-
+    private val _todo : MutableState<Todo?> = mutableStateOf<Todo?>(null)
+    val todo : State<Todo?>
+    get() = _todo
 
     fun fetchTodo(title: String) {
         viewModelScope.launch {
-            runCatching {
-                _uiState.value = DetailUiState.Success(getTodoByTitleUseCase(title))
-                _todo.emit(getTodoByTitleUseCase(title))
-            }
+            _todo.value = getTodoByTitleUseCase(title)
         }
     }
 
@@ -45,7 +37,7 @@ class DetailViewModel @Inject constructor(
             todo.value?.let {
                 deleteTodoUseCase(it)
                 _backScreen.emit(Unit)
-                _todo.emit(null)
+                _todo.value = null
             }
         }
     }
