@@ -1,6 +1,7 @@
 package com.example.composeplayground.screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -37,11 +38,12 @@ fun DetailScreen(onBackButtonClick: () -> Unit, onDeleteTodoClick : () -> Unit, 
                 Checkbox(checked = todo.isChecked, onCheckedChange = {})
             }
             Spacer(modifier = Modifier.height(30.dp))
-            DeleteButton(delete = {
+            Button(onClick = {
                 onDeleteTodoClick()
                 onBackButtonClick()
-
-            })
+            }) {
+                Text(text = "삭제",fontSize = 16.sp)
+            }
         }
     }else{
         Text(text = "로딩중")

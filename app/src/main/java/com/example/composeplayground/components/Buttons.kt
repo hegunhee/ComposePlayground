@@ -22,13 +22,6 @@ fun BackButton(back : () -> Unit){
     }
 }
 
-@Composable
-fun DeleteButton(delete : () -> Unit){
-    Button(onClick = delete) {
-        Text(text = "삭제",fontSize = 16.sp)
-    }
-}
-
 @Preview
 @Composable
 fun ButtonPreview(){
