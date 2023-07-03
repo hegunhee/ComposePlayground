@@ -3,12 +3,15 @@ package com.example.composeplayground
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composeplayground.fastcampus.chapter04.ConstraintLayoutExample
+import com.example.composeplayground.fastcampus.chapter04.ConstraintSetExample
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.screen.DetailErrorScreen
 import com.example.composeplayground.screen.DetailScreenRoute
@@ -22,10 +25,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePlaygroundTheme(darkTheme = false) {
-                ConstraintLayoutExample()
+                ConstraintSetExample()
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun previewScreen() {
+    ConstraintSetExample()
 }
 
 private fun NavGraphBuilder.todoScreen(navController: NavController){
