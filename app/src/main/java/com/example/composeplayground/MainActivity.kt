@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composeplayground.fastcampus.chapter04.ConstraintLayoutExample
 import com.example.composeplayground.fastcampus.chapter04.ConstraintSetExample
+import com.example.composeplayground.fastcampus.chapter04.DialogExample
 import com.example.composeplayground.navigation.Screen
 import com.example.composeplayground.screen.DetailErrorScreen
 import com.example.composeplayground.screen.DetailScreenRoute
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposePlaygroundTheme(darkTheme = false) {
-                ConstraintSetExample()
+                DialogExample()
             }
         }
     }
