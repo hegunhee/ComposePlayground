@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun previewScreen() {
+fun PreviewScreen() {
     ConstraintSetExample()
 }
 
