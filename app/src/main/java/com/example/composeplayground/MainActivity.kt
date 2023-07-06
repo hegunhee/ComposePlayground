@@ -38,7 +38,7 @@ fun NavGraphBuilder.todoScreen(onClickDetailTodo : (String) -> Unit = {}){
     }
 }
 fun NavGraphBuilder.detailScreen(onBackStack : () -> Unit){
-    composable(route = TodoGraph.detailRoute){
+    composable(route = TodoGraph.detailTodoRoute("{title}")){
         val title = it.arguments?.getString("title")
         if(title != null){
             DetailScreenRoute(todoTitle = title, onBackButtonClick = onBackStack)

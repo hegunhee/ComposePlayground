@@ -15,7 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 fun PlayGroundApp() {
     ComposePlaygroundTheme {
         val playGroundAppState = rememberPlayGroundAppState()
-        NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoGraph.TodoRoute) {
+        NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoGraph.todoRoute) {
             todoScreen(playGroundAppState::navigateDetailTodo)
             detailScreen(onBackStack = playGroundAppState::onBackStack)
         }
@@ -39,7 +39,7 @@ class PlayGroundAppState(
     val navController : NavHostController
 ) {
     fun navigateDetailTodo(title : String) {
-        navController.navigate(TodoGraph.createDetailTodoRoute(title))
+        navController.navigate(TodoGraph.detailTodoRoute(title))
     }
 
     fun onBackStack() {
