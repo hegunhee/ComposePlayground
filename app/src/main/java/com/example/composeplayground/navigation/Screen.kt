@@ -1,6 +1,6 @@
 package com.example.composeplayground.navigation
 
-object TodoGraph {
+object Todo {
 
     const val todoRoute = "Todo"
 
