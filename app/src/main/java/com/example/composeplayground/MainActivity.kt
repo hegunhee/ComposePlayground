@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.composeplayground.navigation.TodoGraph
+import com.example.composeplayground.navigation.Todo
 import com.example.composeplayground.screen.DetailErrorScreen
 import com.example.composeplayground.screen.DetailScreenRoute
 import com.example.composeplayground.screen.TodoScreenRoute
@@ -33,12 +33,12 @@ fun PreviewScreen() {
 }
 
 fun NavGraphBuilder.todoScreen(onClickDetailTodo : (String) -> Unit = {}){
-    composable(route = TodoGraph.todoRoute){
+    composable(route = Todo.todoRoute){
         TodoScreenRoute(toNavigateDetail = onClickDetailTodo)
     }
 }
 fun NavGraphBuilder.detailScreen(onBackStack : () -> Unit){
-    composable(route = TodoGraph.detailTodoRoute("{title}")){
+    composable(route = Todo.detailTodoRoute("{title}")){
         val title = it.arguments?.getString("title")
         if(title != null){
             DetailScreenRoute(todoTitle = title, onBackButtonClick = onBackStack)
