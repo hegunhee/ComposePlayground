@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composeplayground.components.BackButton
-import com.example.composeplayground.detail.DetailViewModel
+import com.example.composeplayground.todo.detail.DetailViewModel
 import com.example.domain.model.Todo
 
 @Composable

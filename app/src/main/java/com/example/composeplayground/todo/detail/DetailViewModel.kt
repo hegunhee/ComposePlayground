@@ -1,4 +1,4 @@
-package com.example.composeplayground.detail
+package com.example.composeplayground.todo.detail
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
