@@ -31,19 +31,3 @@ class MainActivity : ComponentActivity() {
 fun PreviewScreen() {
     PlayGroundApp()
 }
-
-fun NavGraphBuilder.todoScreen(onClickDetailTodo : (String) -> Unit = {}){
-    composable(route = Todo.todoRoute){
-        TodoScreenRoute(toNavigateDetail = onClickDetailTodo)
-    }
-}
-fun NavGraphBuilder.detailScreen(onBackStack : () -> Unit){
-    composable(route = Todo.detailTodoRoute("{title}")){
-        val title = it.arguments?.getString("title")
-        if(title != null){
-            DetailScreenRoute(todoTitle = title, onBackButtonClick = onBackStack)
-        }else{
-            DetailErrorScreen(onBackButtonClick = onBackStack)
-        }
-    }
-}
