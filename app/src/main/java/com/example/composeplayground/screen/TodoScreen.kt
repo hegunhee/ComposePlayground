@@ -21,10 +21,7 @@ fun TodoScreenRoute(toNavigateDetail : (String) -> Unit ,todoViewModel: TodoView
     val todoList: State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
     TodoScreen(
         todoList = todoList.value,
-        isDialogOpen = todoViewModel.dialogOpen.value,
         onAddTodoClick = todoViewModel::addTodo,
-        dismissDialog = todoViewModel::dismissDialog,
-        openDialog = todoViewModel::openDialog,
         onResetTodoListClick = todoViewModel::resetTodoList,
         toNavigateDetail = toNavigateDetail,
         onToggleTodoClick = todoViewModel::toggleTodo
@@ -32,7 +29,10 @@ fun TodoScreenRoute(toNavigateDetail : (String) -> Unit ,todoViewModel: TodoView
 }
 
 @Composable
-fun TodoScreen(todoList : List<Todo>,isDialogOpen : Boolean,onAddTodoClick : (Todo) -> Unit, dismissDialog : () -> Unit,openDialog : () -> Unit,onResetTodoListClick : () -> Unit,toNavigateDetail: (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
+fun TodoScreen(todoList : List<Todo>,onAddTodoClick : (Todo) -> Unit,onResetTodoListClick : () -> Unit,toNavigateDetail: (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
+    var isDialogOpen by remember { mutableStateOf(false) }
+    val dismissDialog = { isDialogOpen = false }
+    val openDialog = {isDialogOpen = true}
 
     if (isDialogOpen) {
         var todoText by remember { mutableStateOf("") }
