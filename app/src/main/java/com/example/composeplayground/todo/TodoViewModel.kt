@@ -1,7 +1,6 @@
 package com.example.composeplayground.todo
 
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.Todo
@@ -19,9 +18,6 @@ class TodoViewModel @Inject constructor(
 ): ViewModel(),TodoActionHandler{
 
     var todoList =  getAllTodoListByFlowUseCase()
-    private set
-
-    var dialogOpen = mutableStateOf<Boolean>(false)
     private set
 
     override fun addTodo(todo : Todo) {
@@ -42,13 +38,5 @@ class TodoViewModel @Inject constructor(
         viewModelScope.launch {
             toggleTodoUseCase(todo.copy(isChecked = !todo.isChecked))
         }
-    }
-
-    fun dismissDialog() {
-        dialogOpen.value = false
-    }
-
-    fun openDialog() {
-        dialogOpen.value = true
     }
 }
