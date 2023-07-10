@@ -18,24 +18,22 @@ class DetailViewModel @Inject constructor(
     private val deleteTodoUseCase: DeleteTodoUseCase
 ) : ViewModel() {
 
-    private val _todo : MutableState<Todo?> = mutableStateOf<Todo?>(null)
-    val todo : State<Todo?>
-    get() = _todo
+    private val _todoState : MutableState<TodoState> = mutableStateOf<TodoState>(TodoState.Loading)
+    val todoState : State<TodoState>
+    get() = _todoState
 
     fun fetchTodo(title: String) {
         viewModelScope.launch {
             runCatching {
-                _todo.value = getTodoByTitleUseCase(title)
+                _todoState.value = TodoState.Success(getTodoByTitleUseCase(title))
             }
-
         }
     }
 
-    fun deleteTodo(){
+    fun deleteTodo(todo : Todo){
         viewModelScope.launch {
-            todo.value?.let {
-                deleteTodoUseCase(it)
-            }
+            deleteTodoUseCase(todo)
+            _todoState.value = TodoState.Loading
         }
     }
 }
