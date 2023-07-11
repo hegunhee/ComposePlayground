@@ -22,22 +22,23 @@ fun TodoScreenRoute(toNavigateDetail : (String) -> Unit ,todoViewModel: TodoView
     val todoList: State<List<Todo>> = todoViewModel.todoList.collectAsState(initial = emptyList())
     TodoScreen(
         todoList = todoList.value,
-        onClickAddTodo = todoViewModel::addTodo,
-        onClickResetTodoList = todoViewModel::resetTodoList,
+        onAddTodoClick = todoViewModel::addTodo,
+        onResetTodoListClick = todoViewModel::resetTodoList,
         toNavigateDetail = toNavigateDetail,
-        onClickToggleTodo = todoViewModel::toggleTodo
+        onToggleTodoClick = todoViewModel::toggleTodo
     )
 }
 
 @Composable
-fun TodoScreen(todoList : List<Todo>, onClickAddTodo : (Todo) -> Unit, onClickResetTodoList : () -> Unit, toNavigateDetail: (String) -> Unit, onClickToggleTodo : (Todo) -> Unit){
+fun TodoScreen(todoList : List<Todo>,onAddTodoClick : (Todo) -> Unit,onResetTodoListClick : () -> Unit,toNavigateDetail: (String) -> Unit, onToggleTodoClick : (Todo) -> Unit){
     var isDialogOpen by remember { mutableStateOf(false) }
     val dismissDialog = { isDialogOpen = false }
     val openDialog = {isDialogOpen = true}
 
     if (isDialogOpen) {
-        val (todoText, onTodoTextChange) = remember { mutableStateOf("")}
-        TodoDialog(text = todoText, textChange = onTodoTextChange, onClickAddTodo = onClickAddTodo, onClickDismissDialog = dismissDialog)
+        var todoText by remember { mutableStateOf("") }
+        val todoTextChange: (String) -> Unit = { todoText = it }
+        TodoDialog(text = todoText, textChange = todoTextChange, addTodo = onAddTodoClick, dismissDialog = dismissDialog)
     }
     Scaffold(
         floatingActionButton = { FloatingActionButton(onClick = openDialog, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
@@ -45,7 +46,7 @@ fun TodoScreen(todoList : List<Todo>, onClickAddTodo : (Todo) -> Unit, onClickRe
         } },) {
         Column() {
             if(todoList.isNotEmpty()) {
-                Button(onClick = onClickResetTodoList,modifier = Modifier.padding(start = 10.dp)) {
+                Button(onClick = onResetTodoListClick,modifier = Modifier.padding(start = 10.dp)) {
                     Text(text = "Reset", fontSize = 16.sp)
                 }
             }
@@ -55,7 +56,7 @@ fun TodoScreen(todoList : List<Todo>, onClickAddTodo : (Todo) -> Unit, onClickRe
             } else {
                 LazyColumn() {
                     items(todoList) { todo ->
-                        TodoItem(todo = todo, onTodoDetailClick = toNavigateDetail, onTodoToggle = onClickToggleTodo )
+                        TodoItem(todo = todo, onTodoDetailClick = toNavigateDetail, onTodoToggle = onToggleTodoClick )
                     }
                 }
             }
