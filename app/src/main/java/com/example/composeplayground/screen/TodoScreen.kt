@@ -45,12 +45,9 @@ fun TodoScreen(todoList : List<Todo>,onAddTodoClick : (Todo) -> Unit,onResetTodo
             Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
         } },) {
         Column() {
-            Row() {
-                Spacer(modifier = Modifier.width(10.dp))
-                if (todoList.isNotEmpty()) {
-                    Button(onClick = onResetTodoListClick) {
-                        Text(text = "Reset", fontSize = 16.sp)
-                    }
+            if(todoList.isNotEmpty()) {
+                Button(onClick = onResetTodoListClick,modifier = Modifier.padding(start = 10.dp)) {
+                    Text(text = "Reset", fontSize = 16.sp)
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
