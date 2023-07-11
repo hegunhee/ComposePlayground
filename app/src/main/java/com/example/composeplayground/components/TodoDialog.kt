@@ -18,25 +18,35 @@ import androidx.compose.ui.window.Dialog
 import com.example.domain.model.Todo
 
 @Composable
-fun TodoDialog(text : String, textChange : (String)-> Unit, onClickAddTodo : (Todo) -> Unit, onClickDismissDialog : () -> Unit){
-    Dialog(onDismissRequest = onClickDismissDialog) {
-        TodoDialogContent(text,textChange,onClickAddTodo,onClickDismissDialog)
+fun TodoDialog(text : String, textChange : (String)-> Unit, addTodo : (Todo) -> Unit, dismissDialog : () -> Unit){
+    Dialog(onDismissRequest = dismissDialog ) {
+        TodoDialogContent(text,textChange,addTodo,dismissDialog)
     }
 }
 
 @Composable
-fun TodoDialogContent(text : String, onTextChange : (String)-> Unit, onClickAddTodo : (Todo) -> Unit, onClickDismissDialog : () -> Unit, context : Context = LocalContext.current) {
+fun TodoDialogContent(text : String,textChange : (String)-> Unit,addTodo : (Todo) -> Unit,dismissDialog : () -> Unit,context : Context = LocalContext.current) {
     Column(Modifier.background(Color.White)) {
-        Spacer(modifier = Modifier.height(12.dp).fillMaxWidth())
+        Spacer(modifier = Modifier
+            .height(12.dp)
+            .fillMaxWidth()
+        )
         Text(
             text ="할 일을 추가해 주세요",
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth().wrapContentSize().padding(vertical = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize()
+                .padding(vertical = 8.dp),
             fontSize = 16.sp,
             lineHeight = 17.sp
         )
-        Spacer(modifier = Modifier.height(12.dp).fillMaxWidth())
-        TextField(value = text, onValueChange = onTextChange, singleLine = true, modifier = Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier
+            .height(12.dp)
+            .fillMaxWidth())
+        TextField(value = text, onValueChange = textChange, singleLine = true, modifier = Modifier
+            .fillMaxWidth()
+        )
         Spacer(modifier = Modifier
             .height(12.dp)
             .fillMaxWidth())
@@ -44,10 +54,12 @@ fun TodoDialogContent(text : String, onTextChange : (String)-> Unit, onClickAddT
             if(text.isBlank()){
                 Toast.makeText(context, "글자가 비어있습니다.", Toast.LENGTH_SHORT).show()
             }else{
-                onClickAddTodo(Todo(text))
-                onClickDismissDialog()
+                addTodo(Todo(text))
+                dismissDialog()
             }
-        }, modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),shape = RoundedCornerShape(24.dp)) {
+        }, modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),shape = RoundedCornerShape(24.dp)) {
             Text("추가", fontSize = 16.sp)
         }
         
