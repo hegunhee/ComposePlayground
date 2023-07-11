@@ -36,9 +36,8 @@ fun TodoScreen(todoList : List<Todo>,onAddTodoClick : (Todo) -> Unit,onResetTodo
     val openDialog = {isDialogOpen = true}
 
     if (isDialogOpen) {
-        var todoText by remember { mutableStateOf("") }
-        val todoTextChange: (String) -> Unit = { todoText = it }
-        TodoDialog(text = todoText, textChange = todoTextChange, addTodo = onAddTodoClick, dismissDialog = dismissDialog)
+        val (todoText, onTodoTextChange) = remember { mutableStateOf("")}
+        TodoDialog(text = todoText, textChange = onTodoTextChange, addTodo = onAddTodoClick, dismissDialog = dismissDialog)
     }
     Scaffold(
         floatingActionButton = { FloatingActionButton(onClick = openDialog, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
