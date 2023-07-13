@@ -5,12 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import com.example.composeplayground.navigation.Todo
-import com.example.composeplayground.screen.DetailErrorScreen
-import com.example.composeplayground.screen.DetailScreenRoute
-import com.example.composeplayground.screen.TodoScreenRoute
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import dagger.hilt.android.AndroidEntryPoint
 
