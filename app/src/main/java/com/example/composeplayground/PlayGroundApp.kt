@@ -1,12 +1,19 @@
 package com.example.composeplayground
 
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.composeplayground.fourth.fourthNavGraph
+import com.example.composeplayground.navigation.CustomBottomNavigation
+import com.example.composeplayground.navigation.BottomNavItem
+import com.example.composeplayground.second.secondNavGraph
+import com.example.composeplayground.third.thirdNavGraph
 import com.example.composeplayground.todo.TodoRoute
 import com.example.composeplayground.todo.todoNavGraph
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
@@ -16,11 +23,19 @@ import kotlinx.coroutines.CoroutineScope
 fun PlayGroundApp() {
     ComposePlaygroundTheme {
         val playGroundAppState = rememberPlayGroundAppState()
-        NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoRoute.todoRoute) {
-            todoNavGraph(
-                playGroundAppState::navigateDetailTodo,
-                playGroundAppState::onBackStack
-            )
+        Scaffold(bottomBar = { CustomBottomNavigation(playGroundAppState.getCurrentBackStackEntry(), onBottomClick = playGroundAppState::navigateBottomNavigation) }) {
+            NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoRoute.todoRoute) {
+                todoNavGraph(
+                    playGroundAppState::navigateDetailTodo,
+                    playGroundAppState::onBackStack
+                )
+
+                secondNavGraph()
+
+                thirdNavGraph()
+
+                fourthNavGraph()
+            }
         }
     }
 }
