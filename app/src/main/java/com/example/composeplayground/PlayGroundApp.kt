@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.composeplayground.navigation.Todo
+import com.example.composeplayground.todo.TodoRoute
 import com.example.composeplayground.todo.todoNavGraph
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 fun PlayGroundApp() {
     ComposePlaygroundTheme {
         val playGroundAppState = rememberPlayGroundAppState()
-        NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = Todo.todoRoute) {
+        NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoRoute.todoRoute) {
             todoNavGraph(
                 playGroundAppState::navigateDetailTodo,
                 playGroundAppState::onBackStack
@@ -42,7 +42,7 @@ class PlayGroundAppState(
     val navController : NavHostController
 ) {
     fun navigateDetailTodo(title : String) {
-        navController.navigate(Todo.detailTodoRoute(title))
+        navController.navigate(TodoRoute.detailTodoRoute(title))
     }
 
     fun onBackStack() {
