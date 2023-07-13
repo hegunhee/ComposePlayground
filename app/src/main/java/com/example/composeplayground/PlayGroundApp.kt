@@ -48,4 +48,15 @@ class PlayGroundAppState(
     fun onBackStack() {
         navController.popBackStack()
     }
+
+    fun navigateBottomNavigation(index : Int) {
+        navController.navigate(BottomNavItem.items[index].screen_route) {
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    fun getCurrentBackStackEntry(): NavBackStackEntry? {
+        return navController.currentBackStackEntry
+    }
 }
