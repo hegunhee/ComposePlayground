@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 val LocalColorComposition = compositionLocalOf { Color.Black }
+val LocalTextComposition = compositionLocalOf { "CompositionLocalApp" }
 
 @Composable
 fun CompositionLocalApp() {
@@ -20,6 +21,9 @@ fun CompositionLocalApp() {
             .fillMaxWidth())
         CompositionLocalProvider(LocalColorComposition provides Color.Magenta) {
             MagentaBackgroundText()
+        }
+        CompositionLocalProvider(LocalTextComposition provides "Hello Text") {
+            HelloText()
         }
     }
 }
@@ -35,4 +39,9 @@ fun MagentaBackgroundText() {
 @Composable
 fun BlueBackgroundText() {
     Text(text = "Color.Blue",modifier = Modifier.background(LocalColorComposition.current).fillMaxWidth())
+}
+
+@Composable
+fun HelloText() {
+    Text(text = LocalTextComposition.current, modifier = Modifier.fillMaxWidth())
 }
