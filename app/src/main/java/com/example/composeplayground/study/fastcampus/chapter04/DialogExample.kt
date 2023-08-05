@@ -1,4 +1,4 @@
-package com.example.composeplayground.fastcampus.chapter04
+package com.example.composeplayground.study.fastcampus.chapter04
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.AlertDialog

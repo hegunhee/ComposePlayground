@@ -1,4 +1,4 @@
-package com.example.composeplayground.fastcampus.chapter04
+package com.example.composeplayground.study.fastcampus.chapter04
 
 import android.util.Log
 import androidx.compose.material.Scaffold
