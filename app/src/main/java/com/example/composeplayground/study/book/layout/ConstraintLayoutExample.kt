@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
@@ -15,7 +16,7 @@ fun ConstraintLayoutExample() {
     ConstraintLayout(Modifier.size(width = 400.dp,height = 200.dp)) {
         val (button1, button2, button3) = createRefs()
 
-        createHorizontalChain(button1, button2, button3)
+        createHorizontalChain(button1, button2, button3, chainStyle = ChainStyle.SpreadInside)
 
         CustomButton(text = "Button1", modifier = Modifier.constrainAs(button1) {
             centerVerticallyTo(parent)
