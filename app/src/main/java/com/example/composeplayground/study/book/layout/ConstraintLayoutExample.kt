@@ -16,18 +16,21 @@ fun ConstraintLayoutExample() {
     ConstraintLayout(Modifier.size(width = 400.dp,height = 200.dp)) {
         val (button1, button2, button3) = createRefs()
 
-        createHorizontalChain(button1, button2, button3, chainStyle = ChainStyle.SpreadInside)
+        val guide = createGuidelineFromStart(fraction = .60f)
 
         CustomButton(text = "Button1", modifier = Modifier.constrainAs(button1) {
-            centerVerticallyTo(parent)
+            top.linkTo(parent.top,margin = 30.dp)
+            end.linkTo(guide,margin = 30.dp)
         })
 
         CustomButton(text = "Button2",modifier = Modifier.constrainAs(button2){
-            centerVerticallyTo(parent)
+            top.linkTo(button1.bottom,margin = 20.dp)
+            start.linkTo(guide,margin = 40.dp)
         })
 
-        CustomButton(text = "Button2",modifier = Modifier.constrainAs(button3){
-            centerVerticallyTo(parent)
+        CustomButton(text = "Button3",modifier = Modifier.constrainAs(button3){
+            top.linkTo(button2.top,margin = 40.dp)
+            end.linkTo(guide,margin = 20.dp)
         })
 
     }
