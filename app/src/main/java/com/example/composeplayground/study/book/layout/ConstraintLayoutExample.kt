@@ -12,19 +12,21 @@ import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
 fun ConstraintLayoutExample() {
-    ConstraintLayout(Modifier.size(width = 200.dp,height = 200.dp)) {
+    ConstraintLayout(Modifier.size(width = 400.dp,height = 200.dp)) {
         val (button1, button2, button3) = createRefs()
 
+        createHorizontalChain(button1, button2, button3)
+
         CustomButton(text = "Button1", modifier = Modifier.constrainAs(button1) {
-            centerHorizontallyTo(parent)
-            top.linkTo(parent.top)
-            bottom.linkTo(button2.top)
+            centerVerticallyTo(parent)
         })
 
         CustomButton(text = "Button2",modifier = Modifier.constrainAs(button2){
-            centerHorizontallyTo(parent)
-            top.linkTo(button1.bottom)
-            bottom.linkTo(parent.bottom)
+            centerVerticallyTo(parent)
+        })
+
+        CustomButton(text = "Button2",modifier = Modifier.constrainAs(button3){
+            centerVerticallyTo(parent)
         })
 
     }
