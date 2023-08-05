@@ -16,8 +16,15 @@ fun ConstraintLayoutExample() {
         val (button1, button2, button3) = createRefs()
 
         CustomButton(text = "Button1", modifier = Modifier.constrainAs(button1) {
-            top.linkTo(parent.top,margin = 60.dp)
-            start.linkTo(parent.start, margin = 30.dp)
+            centerHorizontallyTo(parent)
+            top.linkTo(parent.top)
+            bottom.linkTo(button2.top)
+        })
+
+        CustomButton(text = "Button2",modifier = Modifier.constrainAs(button2){
+            centerHorizontallyTo(parent)
+            top.linkTo(button1.bottom)
+            bottom.linkTo(parent.bottom)
         })
 
     }
