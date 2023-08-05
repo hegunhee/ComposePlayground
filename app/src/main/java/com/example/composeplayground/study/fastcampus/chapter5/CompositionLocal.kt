@@ -1,4 +1,4 @@
-package com.example.composeplayground.fastcampus.chapter5
+package com.example.composeplayground.study.fastcampus.chapter5
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
