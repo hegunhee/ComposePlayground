@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.composeplayground.fourth.fourthNavGraph
 import com.example.composeplayground.navigation.CustomBottomNavigation
@@ -23,7 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 fun PlayGroundApp() {
     ComposePlaygroundTheme {
         val playGroundAppState = rememberPlayGroundAppState()
-        Scaffold(bottomBar = { CustomBottomNavigation(playGroundAppState.getCurrentBackStackEntry(), onBottomClick = playGroundAppState::navigateBottomNavigation) }) {
+        Scaffold(bottomBar = { CustomBottomNavigation(playGroundAppState.navController.currentBackStackEntryAsState(), onBottomClick = playGroundAppState::navigateBottomNavigation) }) {
             NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoRoute.todoRoute) {
                 todoNavGraph(
                     playGroundAppState::navigateDetailTodo,
@@ -69,9 +70,5 @@ class PlayGroundAppState(
             launchSingleTop = true
             restoreState = true
         }
-    }
-
-    fun getCurrentBackStackEntry(): NavBackStackEntry? {
-        return navController.currentBackStackEntry
     }
 }
