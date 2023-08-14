@@ -1,10 +1,16 @@
 package com.example.composeplayground
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocal
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,22 +26,25 @@ import com.example.composeplayground.todo.todoNavGraph
 import com.example.composeplayground.ui.theme.ComposePlaygroundTheme
 import kotlinx.coroutines.CoroutineScope
 
+val AppScaffoldPaddingValues = compositionLocalOf { PaddingValues(0.dp) }
 @Composable
 fun PlayGroundApp() {
     ComposePlaygroundTheme {
         val playGroundAppState = rememberPlayGroundAppState()
-        Scaffold(bottomBar = { CustomBottomNavigation(playGroundAppState.navController.currentBackStackEntryAsState(), onBottomClick = playGroundAppState::navigateBottomNavigation) }) {
+        Scaffold(bottomBar = { CustomBottomNavigation(playGroundAppState.navController.currentBackStackEntryAsState(), onBottomClick = playGroundAppState::navigateBottomNavigation) }) { paddingValues ->
             NavHost(modifier = Modifier, navController = playGroundAppState.navController, startDestination = TodoRoute.todoRoute) {
                 todoNavGraph(
+                    paddingValues = paddingValues,
                     playGroundAppState::navigateDetailTodo,
                     playGroundAppState::onBackStack
                 )
 
-                secondNavGraph()
+                    secondNavGraph()
 
-                thirdNavGraph()
+                    thirdNavGraph()
 
-                fourthNavGraph()
+                    fourthNavGraph()
+
             }
         }
     }

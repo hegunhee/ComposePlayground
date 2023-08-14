@@ -10,6 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.composeplayground.AppScaffoldPaddingValues
 import com.example.composeplayground.R
 import com.example.composeplayground.todo.TodoViewModel
 import com.example.composeplayground.components.TodoDialog
@@ -40,10 +41,10 @@ fun TodoScreen(todoList : List<Todo>,onAddTodoClick : (Todo) -> Unit,onResetTodo
         TodoDialog(text = todoText, textChange = onTodoTextChange, addTodo = onAddTodoClick, dismissDialog = dismissDialog)
     }
     Scaffold(
-        floatingActionButton = { FloatingActionButton(onClick = openDialog, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp)) {
+        floatingActionButton = { FloatingActionButton(onClick = openDialog, modifier = Modifier.padding(end = 10.dp, bottom = 10.dp).padding(AppScaffoldPaddingValues.current)) {
             Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
         } },) {
-        Column() {
+        Column(modifier = Modifier.padding(AppScaffoldPaddingValues.current)) {
             if(todoList.isNotEmpty()) {
                 Button(onClick = onResetTodoListClick,modifier = Modifier.padding(start = 10.dp)) {
                     Text(text = "Reset", fontSize = 16.sp)
